@@ -1,8 +1,24 @@
-import flet as ft
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+try:
+    import flet as ft
+except ImportError:
+    install("flet")
+    import flet as ft
+
+try:
+    import nest_asyncio
+except ImportError:
+    install("nest_asyncio")
+    import nest_asyncio
+
 import pandas as pd
 import numpy as np
 
-import nest_asyncio
 nest_asyncio.apply()
 
 stip = pd.read_csv('/Users/henriquerodrigues/Desktop/OECD/Database/STIP_Survey.csv', sep='|', encoding='utf-8', na_values=['', ' ', 'NaN'])
